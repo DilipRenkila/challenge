@@ -1,0 +1,16 @@
+#!/usr/bin/perl
+use LWP::Simple;                # From CPAN
+use JSON qw( decode_json );     # From CPAN
+my $trendsurl = "http://api2.appspotr.com/givemeachallenge";
+my $json = get( $trendsurl );
+die "Could not get $trendsurl!" unless defined $json;
+my $decoded_json = decode_json( $json );
+my @array=@{ $decoded_json->{'quiz'} };
+my %counts = ();
+    for (@array) {
+       $counts{$_}++;
+    }
+    foreach my $keys (keys %counts) {
+       if ($counts{$keys}==1){
+       print "$keys \n";}
+    }
